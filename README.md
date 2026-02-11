@@ -1,26 +1,5 @@
-spark-analytics-concorrentes/
-│
-├── README.md
-├── requirements.txt
-├── src/
-│   ├── __init__.py
-│   ├── spark_session.py
-│   ├── extract.py
-│   ├── transform.py
-│   ├── load.py
-│   └── main.py
-│
-├── data/
-│   └── raw/
-│       ├── bairros.csv
-│       ├── concorrentes.parquet
-│       ├── eventos_de_fluxo.csv.gz
-│       └── populacao.json
-│
-└── output/
-
-
 # Desafio Técnico
+
 A equipe de produtos têm recebido feedbacks do time comercial informando que clientes do setor de alimentação (restaurantes, pizzarias, bares, etc.) desejam análises mais profundas sobre concorrentes. Abaixo está um desafio com maior complexidade técnica e foco em escala, limpeza e análise de dados com **Pyspark** ou **SparkSQL**.
 
 ## Objetivo
@@ -154,7 +133,7 @@ Antes de executar o projeto, é necessário ter instalado:
 
 O Spark requer Java para funcionar corretamente.
 
-### 1️) Verificar se já possui Java instalado
+### 1️. Verificar se já possui Java instalado
 
 ```bash
 /usr/libexec/java_home -V
@@ -162,7 +141,9 @@ O Spark requer Java para funcionar corretamente.
 
 Se não houver nenhuma JVM instalada, será necessário instalar.
 
-### 2️) Instalar Java 11 (Temurin recomendado)
+---
+
+### 2️. Instalar Java 11 (Temurin recomendado)
 
 Baixe a versão compatível com seu sistema operacional:
 
@@ -176,7 +157,9 @@ Escolha:
 
 Instale o arquivo .pkg.
 
-### 3️) Configurar variáveis de ambiente
+---
+
+### 3️. Configurar variáveis de ambiente
 
 Após instalar:
 
@@ -197,16 +180,18 @@ Saída esperada:
 openjdk version "11.x.x"
 ```
 
+---
+
 ## Configuração do ambiente Python
 
-### 1️) Clonar o repositório
+### 1️. Clonar o repositório
 
 ```bash
 git clone <url-do-repositorio>
 cd spark-analytics-concorrentes
 ```
 
-### 2️) Criar ambiente virtual
+### 2️. Criar ambiente virtual
 
 ```bash
 python -m venv .venv
@@ -225,7 +210,7 @@ Deve apontar para:
 .../spark-analytics-concorrentes/.venv/bin/python
 ```
 
-### 3️) Instalar dependências
+### 3️. Instalar dependências
 
 ```bash
 pip install -r requirements.txt
