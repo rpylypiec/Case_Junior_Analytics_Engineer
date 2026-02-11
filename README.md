@@ -187,8 +187,8 @@ openjdk version "11.x.x"
 ### 1️. Clonar o repositório
 
 ```bash
-git clone <url-do-repositorio>
-cd spark-analytics-concorrentes
+gh repo clone rpylypiec/Case_Junior_Analytics_Engineer
+cd case_junior_analytics_engineer
 ```
 
 ### 2️. Criar ambiente virtual
