@@ -136,4 +136,227 @@ Sua solução será avaliada pelos seguintes critérios:
 
 # Bom teste!
 
-----------
+---
+
+# Como executar o projeto
+
+## Pré-requisitos
+
+Antes de executar o projeto, é necessário ter instalado:
+
+- Python 3.9+
+- Java 11 (obrigatório para execução do Spark)
+- Git
+
+---
+
+## Instalação do Java 11 (macOS)
+
+O Spark requer Java para funcionar corretamente.
+
+### 1️) Verificar se já possui Java instalado
+
+```bash
+/usr/libexec/java_home -V
+```
+
+Se não houver nenhuma JVM instalada, será necessário instalar.
+
+### 2️) Instalar Java 11 (Temurin recomendado)
+
+Baixe a versão compatível com seu sistema operacional:
+
+ https://adoptium.net/
+
+Escolha:
+
+- Version: 11 (LTS)
+- Architecture compatível com sua máquina
+- macOS x64 (para Intel) ou ARM (para Apple Silicon)
+
+Instale o arquivo .pkg.
+
+### 3️) Configurar variáveis de ambiente
+
+Após instalar:
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+Para validar:
+
+```bash
+java -version
+```
+
+Saída esperada:
+
+```
+openjdk version "11.x.x"
+```
+
+## Configuração do ambiente Python
+
+### 1️) Clonar o repositório
+
+```bash
+git clone <url-do-repositorio>
+cd spark-analytics-concorrentes
+```
+
+### 2️) Criar ambiente virtual
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Verifique se está usando o Python correto:
+
+```bash
+which python
+```
+
+Deve apontar para:
+
+```
+.../spark-analytics-concorrentes/.venv/bin/python
+```
+
+### 3️) Instalar dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+Dependências principais:
+
+- pyspark
+- py4j
+
+## Estrutura do Projeto
+
+```
+spark-analytics-concorrentes/
+│
+├── README.md
+├── requirements.txt
+├── src/
+│   ├── spark_session.py   # Criação da SparkSession
+│   ├── extract.py         # Leitura das fontes de dados
+│   ├── transform.py       # Limpeza, joins e cálculos
+│   ├── load.py            # Escrita do dataset final
+│   └── main.py            # Orquestração do pipeline
+│
+├── data/raw/              # Dados de entrada
+└── output/                # Saída particionada em Parquet
+```
+
+O projeto segue uma separação modular baseada em pipeline de dados:
+
+- Extract → leitura das fontes
+- Transform → tratamento, joins e enriquecimento
+- Load → persistência do resultado
+
+## Executando o pipeline
+
+Com o ambiente ativado:
+
+```bash
+python -m src.main
+```
+
+Ou:
+
+```bash
+python src/main.py
+```
+
+Durante a execução serão exibidos:
+
+- Schemas das tabelas
+- Primeiras linhas do dataset final
+- Contagem total de registros
+- Validação de nullabilidade
+
+## Resultado gerado
+
+Após execução bem-sucedida:
+
+```
+output/
+   ├── UF=SP/
+   │     ├── CATEGORIA=Restaurant/
+   │     ├── CATEGORIA=Bar/
+   │     └── ...
+```
+
+O dataset final será salvo em:
+
+```
+output/saida_concorrentes.parquet
+```
+
+Particionado por:
+
+- UF
+- CATEGORIA
+
+## Validações aplicadas
+
+O pipeline realiza as seguintes validações:
+
+- Remoção de registros com CODIGO_BAIRRO nulo
+- Padronização de tipos para evitar falhas de JOIN
+- Correção de notação científica em codigo_bairro
+- Tratamento de divisão por zero no cálculo de densidade
+- Verificação de colunas nulas após enriquecimento
+
+## Dataset final
+
+Campos finais:
+
+- cod_concorrente
+- nome_concorrente
+- endereco
+- preco_praticado
+- bairro
+- populacao
+- densidade_demografica
+- uf
+- categoria
+
+Ordenação aplicada:
+
+- Densidade demográfica (desc)
+- Faixa de preço (asc)
+
+## Observações Técnicas
+
+Durante o desenvolvimento foi identificado um problema de notação científica na coluna codigo_bairro proveniente do dataset de concorrentes.
+
+Exemplo:
+
+```
+3.519071005E9
+```
+
+A solução aplicada foi a conversão correta:
+
+```
+double → long
+```
+
+Garantindo compatibilidade com as tabelas dimensionais e evitando falhas silenciosas de JOIN.
+
+## Resultado
+
+O pipeline gera:
+
+- 1450 registros válidos
+- 0 valores nulos em bairro, população ou densidade
+- Persistência otimizada em formato Parquet particionado
+
+
