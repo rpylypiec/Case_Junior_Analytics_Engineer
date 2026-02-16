@@ -133,7 +133,7 @@ Antes de executar o projeto, é necessário ter instalado:
 
 O Spark requer Java para funcionar corretamente.
 
-### 1️. Verificar se já possui Java instalado
+### 1️⃣ Verificar se já possui Java instalado
 
 ```bash
 /usr/libexec/java_home -V
@@ -143,7 +143,7 @@ Se não houver nenhuma JVM instalada, será necessário instalar.
 
 ---
 
-### 2️. Instalar Java 11 (Temurin recomendado)
+### 2️⃣ Instalar Java 11 (Temurin recomendado)
 
 Baixe a versão compatível com seu sistema operacional:
 
@@ -159,7 +159,7 @@ Instale o arquivo .pkg.
 
 ---
 
-### 3️. Configurar variáveis de ambiente
+### 3️⃣ Configurar variáveis de ambiente
 
 Após instalar:
 
@@ -184,14 +184,14 @@ openjdk version "11.x.x"
 
 ## Configuração do ambiente Python
 
-### 1️. Clonar o repositório
+### 1️⃣ Clonar o repositório
 
 ```bash
 gh repo clone rpylypiec/Case_Junior_Analytics_Engineer
 cd case_junior_analytics_engineer
 ```
 
-### 2️. Criar ambiente virtual
+### 2️⃣ Criar ambiente virtual
 
 ```bash
 python -m venv .venv
@@ -210,7 +210,7 @@ Deve apontar para:
 .../spark-analytics-concorrentes/.venv/bin/python
 ```
 
-### 3️. Instalar dependências
+### 3️⃣ Instalar dependências
 
 ```bash
 pip install -r requirements.txt
